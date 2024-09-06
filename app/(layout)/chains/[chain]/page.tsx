@@ -30,6 +30,8 @@ import {
 import FeesHorizontalScrollContainer from "@/components/FeesHorizontalScrollContainer";
 import { columns } from "@/components/table/contractTable/column";
 import { ContractDataTable } from "@/components/table/contractTable/data-table";
+import { columnsContractRestake } from "@/components/table/contrationRestake/column";
+import { ContractRestakeDataTable } from "@/components/table/contrationRestake/data-table";
 
 const Chain = ({ params }: { params: any }) => {
   const { chain } = params;
@@ -612,8 +614,32 @@ const Chain = ({ params }: { params: any }) => {
                 Risk Metrics
               </Heading>
             </div>
+
+            <div className="mb-12">
+              <ChainSectionHead
+                title={"Concentration of stake among operators"}
+                enableDropdown={false}
+                defaultDropdown={true}
+                childrenHeight={isMobile ? 97 : 111}
+                className="transition-all duration-300 w-full"
+              ></ChainSectionHead>
+
+              {master && overviewData !== null && chainKey !== "ethereum" && (
+                <>
+                  <FeesHorizontalScrollContainer>
+                    {overviewData && master && (
+                      <ContractDataTable
+                        columns={columns}
+                        data={getData(dataTest)}
+                      />
+                    )}
+                  </FeesHorizontalScrollContainer>
+                </>
+              )}
+            </div>
+
             <ChainSectionHead
-              title={"Concentration of stake among operators"}
+              title={"Concentration of restake among individual restakers"}
               enableDropdown={false}
               defaultDropdown={true}
               childrenHeight={isMobile ? 97 : 111}
@@ -624,8 +650,8 @@ const Chain = ({ params }: { params: any }) => {
               <>
                 <FeesHorizontalScrollContainer>
                   {overviewData && master && (
-                    <ContractDataTable
-                      columns={columns}
+                    <ContractRestakeDataTable
+                      columns={columnsContractRestake}
                       data={getData(dataTest)}
                     />
                   )}

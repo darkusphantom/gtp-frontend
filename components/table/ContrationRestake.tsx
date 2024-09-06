@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Table, TableBody, TableHead, TableRow } from "../ui/table";
 import {
   DropdownMenu,
@@ -16,6 +15,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -23,7 +23,7 @@ interface DataTableColumnHeaderProps<TData, TValue>
   title: string;
 }
 
-export default function ContractTableContainer({ columns, data }) {
+export default function ContractRestakeTableContainer({ columns, data }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const table = useReactTable({
     data,
@@ -55,28 +55,8 @@ export default function ContractTableContainer({ columns, data }) {
           })}
         </TableRow>
       ))}
-      {/* <TableHeader>
-        <TableHeaderRow columns={columns} />
-      </TableHeader>*/}
       <TableBody>
-        <TableRow> Dorime</TableRow>
-        {/* {(!sortOrder
-          ? Object.keys(sortedContracts)
-          : Object.keys(sortedContracts).reverse()
-        )
-          .slice(0, maxDisplayedContracts)
-          .map((key, i) => (
-            <ContractRowItem
-              key={key}
-              rowKey={key}
-              i={i}
-              selectedContract={selectedContract}
-              sortedContracts={sortedContracts}
-              sortOrder={sortOrder}
-              setSortOrder={setSortOrder}
-              setSelectedContract={setSelectedContract}
-            />
-          ))} */}
+        <TableRow>Dorime</TableRow>
       </TableBody>
     </Table>
   );
