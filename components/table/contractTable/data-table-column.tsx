@@ -6,8 +6,8 @@ import { Checked } from "@/components/types/common";
 export const TableHeaderRow = (columns: any[]) => {
   return (
     <TableRow>
-      {columns.map((header) => (
-        <TableHead key={header.name} className={header.style}>
+      {columns.map((header, index) => (
+        <TableHead key={index} className={header.style}>
           {header.hasTooltip ? (
             <CheckboxDropdownMenu
               btnName={header.name}

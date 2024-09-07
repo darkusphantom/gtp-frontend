@@ -29,6 +29,10 @@ const nextConfig = {
           ],
           destination: "/fees",
         },
+        {
+          source: "/restake/:path*",
+          destination: "https://jnt1ylgihi.execute-api.us-east-1.amazonaws.com/prod/:path*",
+        },
       ],
     };
   },
@@ -65,12 +69,7 @@ const nextConfig = {
       },
     ],
   },
+
 };
 
-// const millionConfig = {
-//   auto: true,
-// };
-
 module.exports = nextConfig;
-
-// export default million.next(nextConfig, millionConfig);

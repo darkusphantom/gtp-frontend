@@ -16,10 +16,10 @@ export type Chain = {
 
 export const columnsContractRestake: ColumnDef<Chains>[] = [
   {
-    accessorKey: "Operator Address",
+    accessorKey: "Staker Address",
     header: "Staker Address",
     cell: ({ row }) => {
-      const address = row.getValue("Operator Address") as string;
+      const address = row.getValue("Staker Address") as string;
 
       return (
         <div className="flex items-center">

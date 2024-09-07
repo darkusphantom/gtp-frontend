@@ -48,11 +48,11 @@ export const columns: ColumnDef<Chains>[] = [
     accessorKey: "Operator Name",
     header: "Operator Name",
     cell: ({ row }) => {
-      const name = row.getValue("name") as string;
+      // const name = row.getValue("name") as string;
 
       return (
         <div className="flex items-center">
-          {name}
+          {/* {name} */}
           <Button
             variant="ghost"
             className="bg-transparent border-none p-0 ml-2"
