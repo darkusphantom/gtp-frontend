@@ -14,16 +14,12 @@ export type Chain = {
   date_deployed: string;
 };
 
-export const columns: ColumnDef<Chains>[] = [
-  // {
-  //   accessorKey: "icon",
-  //   header: "",
-  // },
+export const columnsContractRestake: ColumnDef<Chains>[] = [
   {
-    accessorKey: "Operator Address",
-    header: "Operator Address",
+    accessorKey: "Staker Address",
+    header: "Staker Address",
     cell: ({ row }) => {
-      const address = row.getValue("Operator Address") as string;
+      const address = row.getValue("Staker Address") as string;
 
       return (
         <div className="flex items-center">
@@ -39,31 +35,6 @@ export const columns: ColumnDef<Chains>[] = [
               className="w-5 h-5"
               aria-hidden="true"
             ></Icon>
-          </Button>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "Operator Name",
-    header: "Operator Name",
-    cell: ({ row }) => {
-      // const name = row.getValue("name") as string;
-
-      return (
-        <div className="flex items-center">
-          {/* {name} */}
-          <Button
-            variant="ghost"
-            className="bg-transparent border-none p-0 ml-2"
-            onClick={() => console.log("Copiado")}
-            aria-label={"Copy completed"}
-          >
-            {/* <Icon
-              icon="feather:plus"
-              className="w-5 h-5"
-              aria-hidden="true"
-            ></Icon> */}
           </Button>
         </div>
       );
@@ -100,43 +71,12 @@ export const columns: ColumnDef<Chains>[] = [
                 aria-hidden="true"
               />
             ) : (
-              // <Icon
-              //   icon="feather:minus"
-              //   className="w-5 h-5"
-              //   aria-hidden="true"
-              // />
               <></>
             )}
           </span>
         </Button>
       );
     },
-    // cell: ({ row }) => {
-    //   const value = row.getValue("market-shared") as string;
-
-    //   return (
-    //     <>
-    //       <Button
-    //         variant="ghost"
-    //         className="bg-transparent border-none"
-    //         onClick={() => console.log("Copiado")}
-    //         aria-label={"Copy completed"}
-    //       >
-    //         <Icon
-    //           icon="feather:circle"
-    //           className="w-5 h-5 mr-2"
-    //           aria-hidden="true"
-    //         ></Icon>
-    //         {value}
-    //         <Icon
-    //           icon="feather:plus"
-    //           className="w-5 h-5 ml-2 color-[#36413F] bg-[#96A09C] rounded-full"
-    //           aria-hidden="true"
-    //         ></Icon>
-    //       </Button>
-    //     </>
-    //   );
-    // },
   },
   {
     accessorKey: "ETH Restaked",
@@ -186,11 +126,6 @@ export const columns: ColumnDef<Chains>[] = [
             aria-label={"Copy completed"}
           >
             {subcategory}
-            {/* <Icon
-              icon="feather:plus"
-              className="w-5 h-5 ml-2 color-[#36413F] bg-[#96A09C] rounded-full"
-              aria-hidden="true"
-            ></Icon> */}
           </div>
         </>
       );
@@ -272,14 +207,4 @@ export const columns: ColumnDef<Chains>[] = [
       );
     },
   },
-  // {
-  //   accessorKey: "date_deployed",
-  //   header: () => <div>Date Deployed</div>,
-  //   cell: ({ row }) => {
-  //     const date = row.getValue("date_deployed") as string;
-  //     const dateFormated = new Date(date).toLocaleDateString("es-ES");
-
-  //     return <div>{dateFormated}</div>;
-  //   },
-  // },
 ];

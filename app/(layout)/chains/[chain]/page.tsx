@@ -30,6 +30,13 @@ import {
 import FeesHorizontalScrollContainer from "@/components/FeesHorizontalScrollContainer";
 import { columns } from "@/components/table/contractTable/column";
 import { ContractDataTable } from "@/components/table/contractTable/data-table";
+import { columnsContractRestake } from "@/components/table/contrationRestake/column";
+import { ContractRestakeDataTable } from "@/components/table/contrationRestake/data-table";
+import { method } from "lodash";
+import {
+  fetchOperatorData,
+  fetchStakerData,
+} from "@/app/api/restake/restakeAPI";
 
 const Chain = ({ params }: { params: any }) => {
   const { chain } = params;
@@ -101,15 +108,58 @@ const Chain = ({ params }: { params: any }) => {
     isValidating: feeValidating,
   } = useSWR("https://api.growthepie.xyz/v1/fees/table.json");
 
-  const {
-    data: dataTest,
-    error: errorTest,
-    isLoading: loadingTest,
-    isValidating: validatingTest,
-  } = useSWR<any>("/mock/v2/operator-data.json");
+  // const {
+  //   data: dataTest,
+  //   error: errorTest,
+  //   isLoading: loadingTest,
+  //   isValidating: validatingTest,
+  // } = useSWR<any>("/mock/v2/operator-data.json");
 
-  const { cache, mutate } = useSWRConfig();
+  // Operator Data
+  const [operatorData, setOperatorData] = useState<any>(null);
+  const [isLoadingOperatorData, setIsLoadingOperatorData] = useState(false);
 
+  const fetchOperatorDataCallback = useCallback(async () => {
+    try {
+      setIsLoadingOperatorData(true);
+      const operatorDataResponse = await fetchOperatorData({ limit: 15 });
+      setOperatorData(operatorDataResponse);
+    } catch (error) {
+      console.error("Ha ocurrido un error");
+    } finally {
+      setIsLoadingOperatorData(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!operatorData) {
+      fetchOperatorDataCallback();
+    }
+  }, [operatorData, fetchOperatorDataCallback]);
+
+  // Staker operator
+  const [stakerData, setStakerData] = useState<any>(null);
+  const [isLoadingStakerData, setIsLoadingStakerData] = useState(false);
+
+  const fetchStakerDataCallback = useCallback(async () => {
+    try {
+      setIsLoadingStakerData(true);
+      const stakerDataResponse = await fetchStakerData({ limit: 15 });
+      setStakerData(stakerDataResponse);
+    } catch (error) {
+      console.error("Ha ocurrido un error");
+    } finally {
+      setIsLoadingStakerData(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!stakerData) {
+      fetchStakerDataCallback();
+    }
+  }, [stakerData, fetchStakerDataCallback]);
+
+  //Chains
   const fetchChainData = useCallback(async () => {
     setChainLoading(true);
     setChainValidating(true);
@@ -612,8 +662,36 @@ const Chain = ({ params }: { params: any }) => {
                 Risk Metrics
               </Heading>
             </div>
+
+            <div className="mb-12">
+              <ChainSectionHead
+                title={"Concentration of stake among operators"}
+                enableDropdown={false}
+                defaultDropdown={true}
+                childrenHeight={isMobile ? 97 : 111}
+                className="transition-all duration-300 w-full"
+              ></ChainSectionHead>
+
+              {master && overviewData !== null && chainKey !== "ethereum" && (
+                <>
+                  <FeesHorizontalScrollContainer>
+                    {overviewData && master && (
+                      <ContractDataTable
+                        columns={columns}
+                        data={
+                          operatorData?.operatorData
+                            ? operatorData?.operatorData
+                            : []
+                        }
+                      />
+                    )}
+                  </FeesHorizontalScrollContainer>
+                </>
+              )}
+            </div>
+
             <ChainSectionHead
-              title={"Concentration of stake among operators"}
+              title={"Concentration of restake among individual restakers"}
               enableDropdown={false}
               defaultDropdown={true}
               childrenHeight={isMobile ? 97 : 111}
@@ -624,9 +702,11 @@ const Chain = ({ params }: { params: any }) => {
               <>
                 <FeesHorizontalScrollContainer>
                   {overviewData && master && (
-                    <ContractDataTable
-                      columns={columns}
-                      data={getData(dataTest)}
+                    <ContractRestakeDataTable
+                      columns={columnsContractRestake}
+                      data={
+                        stakerData?.stakerData ? stakerData?.stakerData : []
+                      }
                     />
                   )}
                 </FeesHorizontalScrollContainer>
@@ -637,29 +717,6 @@ const Chain = ({ params }: { params: any }) => {
       </Container>
     </>
   );
-};
-
-const getData = (data: any): any[] => {
-  // console.log("data test", data.operatorData[0]["Operator Address"]);
-  // return [
-  //   {
-  //     icon: "icono",
-  //     address: "r89ehpfzhsp8fher",
-  //     name: "dorime",
-  //     category: "basic",
-  //     subcategory: "subasic",
-  //     date_deployed: "15/01/12",
-  //   },
-  //   {
-  //     icon: "icono",
-  //     address: "v4ot8hv9ptvinsdhkfds",
-  //     name: "ameno",
-  //     category: "intermediate",
-  //     subcategory: "susa",
-  //     date_deployed: "22/08/20",
-  //   },
-  // ];
-  return data.operatorData;
 };
 
 export default Chain;
