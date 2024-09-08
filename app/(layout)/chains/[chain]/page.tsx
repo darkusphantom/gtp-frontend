@@ -33,7 +33,10 @@ import { ContractDataTable } from "@/components/table/contractTable/data-table";
 import { columnsContractRestake } from "@/components/table/contrationRestake/column";
 import { ContractRestakeDataTable } from "@/components/table/contrationRestake/data-table";
 import { method } from "lodash";
-import { fetchOperatorData, fetchStakerData } from "@/app/api/restake/route";
+import {
+  fetchOperatorData,
+  fetchStakerData,
+} from "@/app/api/restake/restakeAPI";
 
 const Chain = ({ params }: { params: any }) => {
   const { chain } = params;
